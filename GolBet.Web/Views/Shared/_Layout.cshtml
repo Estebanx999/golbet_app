@@ -1,46 +1,172 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GolBet.Web</title>
+    <title>@ViewData["Title"] - GolBet</title>
+
+    <!-- Google Fonts & Bootstrap Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Framework & Styles -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GolBet.Web.styles.css" asp-append-version="true" />
+
+    <style>
+            :root {
+                --bp-bg: #0b1019; /* Fondo ultra oscuro BetPlay */
+                --bp-header: #0e1b30; /* Azul azulado navbar */
+                --bp-card: #152238; /* Azul marino profundo contenedores */
+                --bp-card-header: #1c2d4a; /* Azul medio para barras de títulos */
+                --bp-accent-lime: #00e676; /* Verde neón brillante para cuotas/botones */
+                --bp-accent-blue: #0088ff; /* Azul brillante detalles */
+                --bp-text: #ffffff;
+                --bp-text-muted: #8ca0ba;
+                --bp-border: #1f3454;
+            }
+
+            body {
+                font-family: 'Roboto', sans-serif;
+                background-color: var(--bp-bg);
+                color: var(--bp-text);
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                font-size: 0.9rem;
+            }
+
+            /* Navbar estilo BetPlay */
+            .bp-navbar {
+                background-color: var(--bp-header);
+                border-bottom: 3px solid var(--bp-accent-lime);
+                box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            }
+
+            .navbar-brand {
+                font-weight: 900;
+                font-size: 1.6rem;
+                letter-spacing: -0.5px;
+            }
+
+            .bp-nav-link {
+                color: #d1e0f0 !important;
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 0.85rem;
+                padding: 0.6rem 1rem !important;
+                border-radius: 4px;
+            }
+
+                .bp-nav-link:hover, .bp-nav-link.active {
+                    color: #fff !important;
+                    background-color: rgba(255, 255, 255, 0.08);
+                }
+
+            /* Botones estilo BetPlay */
+            .btn-bp-lime {
+                background-color: var(--bp-accent-lime);
+                color: #000;
+                font-weight: 800;
+                text-transform: uppercase;
+                font-size: 0.8rem;
+                border: none;
+                padding: 0.5rem 1.2rem;
+                border-radius: 4px;
+            }
+
+                .btn-bp-lime:hover {
+                    background-color: #00c853;
+                    color: #000;
+                    box-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
+                }
+
+            .btn-bp-login {
+                color: #fff;
+                font-weight: 700;
+                font-size: 0.85rem;
+                border: 1px solid var(--bp-border);
+                background: rgba(255,255,255,0.05);
+            }
+
+                .btn-bp-login:hover {
+                    background: rgba(255,255,255,0.15);
+                    color: #fff;
+                }
+
+            /* Footer */
+            footer {
+                background-color: var(--bp-header);
+                border-top: 1px solid var(--bp-border);
+                margin-top: auto;
+            }
+    </style>
 </head>
 <body>
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GolBet.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark bp-navbar py-1">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand text-white d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-shield-shaded text-warning fs-3"></i>
+                    <span>GOL<span style="color: var(--bp-accent-lime);">BET</span></span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav me-auto ms-3 gap-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link bp-nav-link active" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door-fill text-warning me-1"></i> Inicio
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link bp-nav-link" asp-controller="Partidos" asp-action="Index">
+                                <i class="bi bi-trophy-fill text-warning me-1"></i> Deportes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link bp-nav-link" href="#">
+                                <span class="badge bg-danger me-1">EN VIVO</span> Apuestas en Vivo
+                            </a>
                         </li>
                     </ul>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <a class="btn btn-sm btn-bp-login px-3" asp-controller="Account" asp-action="Login">Ingresar</a>
+                        <a class="btn btn-sm btn-bp-lime" asp-controller="Account" asp-action="Register">Registrarse</a>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <div class="container-fluid px-4 my-3">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - GolBet.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="py-3 text-center">
+        <div class="container-fluid px-4 text-muted small">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-md-start">
+                    &copy; @DateTime.Now.Year <strong class="text-white">GolBet</strong> · Casa de Apuestas Oficial
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-muted text-decoration-none me-3">Términos</a>
+                    <a href="#" class="text-muted text-decoration-none">Juego Responsable <i class="bi bi-shield-check text-success"></i></a>
+                </div>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,8 +1,342 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Apuestas Deportivas en Vivo";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    /* Estilos específicos BetPlay 3 Columnas */
+    .bp-sidebar-box {
+        background-color: #152238;
+        border: 1px solid #1f3454;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .bp-sidebar-header {
+        background-color: #1c2d4a;
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        padding: 8px 12px;
+        border-bottom: 2px solid #0088ff;
+    }
+
+    .bp-menu-item {
+        color: #c0d1e5;
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        text-decoration: none;
+        font-size: 0.85rem;
+        border-bottom: 1px solid rgba(255,255,255,0.03);
+        transition: all 0.2s;
+    }
+
+        .bp-menu-item:hover, .bp-menu-item.active {
+            background-color: #1a2b47;
+            color: #00e676;
+        }
+
+        /* Estilo para deportes deshabilitados / Próximamente */
+        .bp-menu-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+    .bp-section-title {
+        background-color: #1c2d4a;
+        border-bottom: 2px solid #0088ff;
+        padding: 8px 15px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.82rem;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .bp-match-row {
+        background-color: #152238;
+        border-bottom: 1px solid #1f3454;
+        padding: 8px 12px;
+        transition: background-color 0.2s;
+    }
+
+        .bp-match-row:hover {
+            background-color: #1a2c4a;
+        }
+
+    /* Botones de Cuotas BetPlay */
+    .odd-btn {
+        background-color: #0b1321;
+        border: 1px solid #1f3454;
+        color: #fff;
+        border-radius: 4px;
+        padding: 5px 8px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.15s;
+        font-size: 0.82rem;
+    }
+
+        .odd-btn:hover {
+            border-color: #00e676;
+            background-color: rgba(0, 230, 118, 0.12);
+        }
+
+        .odd-btn .odd-val {
+            color: #00e676;
+            font-weight: 800;
+        }
+
+        .odd-btn .odd-label {
+            color: #8ca0ba;
+            font-size: 0.72rem;
+        }
+
+    .betslip-card {
+        background-color: #152238;
+        border: 1px solid #1f3454;
+        border-radius: 4px;
+        position: sticky;
+        top: 15px;
+    }
+
+    .betslip-header {
+        background-color: #0088ff;
+        color: #fff;
+        font-weight: 800;
+        text-transform: uppercase;
+        padding: 8px;
+        font-size: 0.82rem;
+        text-align: center;
+    }
+</style>
+
+<div class="row g-3">
+
+    <!-- COLUMNA 1: MENÚ LATERAL DE NAVEGACIÓN Y LIGAS (20%) -->
+    <div class="col-lg-3 col-md-4">
+
+        <!-- Categorías Principales -->
+        <div class="bp-sidebar-box mb-3">
+            <div class="bp-sidebar-header">
+                <i class="bi bi-fire text-warning me-1"></i> Principales Ligas
+            </div>
+            <div class="d-flex flex-column">
+                <a href="#" class="bp-menu-item active">
+                    <span><i class="bi bi-trophy text-warning me-2"></i> Liga BetPlay Dimayor</span>
+                    <span class="badge bg-dark text-muted">12</span>
+                </a>
+                <a href="#" class="bp-menu-item">
+                    <span><i class="bi bi-star me-2 text-info"></i> Champions League</span>
+                    <span class="badge bg-dark text-muted">8</span>
+                </a>
+                <a href="#" class="bp-menu-item">
+                    <span><i class="bi bi-shield me-2 text-danger"></i> LaLiga España</span>
+                    <span class="badge bg-dark text-muted">10</span>
+                </a>
+                <a href="#" class="bp-menu-item">
+                    <span><i class="bi bi-shield-shaded me-2 text-primary"></i> Premier League</span>
+                    <span class="badge bg-dark text-muted">10</span>
+                </a>
+                <a href="#" class="bp-menu-item">
+                    <span><i class="bi bi-globe me-2 text-success"></i> Copa Libertadores</span>
+                    <span class="badge bg-dark text-muted">6</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Todos los Deportes -->
+        <div class="bp-sidebar-box">
+            <div class="bp-sidebar-header">
+                <i class="bi bi-grid-fill me-1"></i> Deportes
+            </div>
+            <div class="d-flex flex-column">
+                <!-- Fútbol Activo -->
+                <a href="#" class="bp-menu-item active">
+                    <span><i class="bi bi-dribbble me-2 text-success"></i> Fútbol</span>
+                    <span class="badge bg-success text-dark fw-bold">145</span>
+                </a>
+
+                <!-- Deportes Próximamente (Deshabilitados) -->
+                <div class="bp-menu-item disabled">
+                    <span><i class="bi bi-basket me-2 text-secondary"></i> Baloncesto</span>
+                    <span class="badge bg-secondary text-dark" style="font-size: 0.65rem;">Próximamente</span>
+                </div>
+                <div class="bp-menu-item disabled">
+                    <span><i class="bi bi-controller me-2 text-secondary"></i> eSports</span>
+                    <span class="badge bg-secondary text-dark" style="font-size: 0.65rem;">Próximamente</span>
+                </div>
+                <div class="bp-menu-item disabled">
+                    <span><i class="bi bi-activity me-2 text-secondary"></i> Tenis</span>
+                    <span class="badge bg-secondary text-dark" style="font-size: 0.65rem;">Próximamente</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COLUMNA 2: PARRILLA DE PARTIDOS Y DESTACADOS (55%) -->
+    <div class="col-lg-6 col-md-8">
+
+        <!-- Banner Promocional Estilo BetPlay (Compacto) -->
+        <div class="p-3 mb-3 rounded d-flex align-items-center justify-content-between" style="background: linear-gradient(90deg, #102d53 0%, #0e1b30 100%); border-left: 4px solid #00e676;">
+            <div>
+                <span class="badge bg-danger text-uppercase mb-1">Supercuota de Hoy</span>
+                <h6 class="fw-bold text-white mb-0">Nacional vs Millonarios</h6>
+                <small class="text-muted">Gana Nacional + Más de 2.5 goles en el partido</small>
+            </div>
+            <div class="text-end">
+                <span class="d-block text-muted small">Cuota Especial</span>
+                <span class="fw-bold fs-5 text-success">4.50</span>
+            </div>
+        </div>
+
+        <!-- Tabla de Partidos Destacados -->
+        <div class="mb-3">
+            <div class="bp-section-title text-white d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-trophy-fill text-warning me-1"></i> Fútbol - Destacados del Día</span>
+                <span class="small text-muted">1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2</span>
+            </div>
+
+            <!-- Partido 1 -->
+            <div class="bp-match-row">
+                <div class="row align-items-center g-2">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-dark text-info">19:00</span>
+                            <div>
+                                <div class="fw-bold text-white fs-6">Atlético Nacional</div>
+                                <div class="fw-bold text-white fs-6">Millonarios</div>
+                                <div class="small text-muted" style="font-size: 0.72rem;">Liga BetPlay Dimayor</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row g-1">
+                            <div class="col-4">
+                                <div class="odd-btn d-flex justify-content-between align-items-center">
+                                    <span class="odd-label">1</span>
+                                    <span class="odd-val">2.05</span>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="odd-btn d-flex justify-content-between align-items-center">
+                                    <span class="odd-label">X</span>
+                                    <span class="odd-val">3.10</span>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="odd-btn d-flex justify-content-between align-items-center">
+                                    <span class="odd-label">2</span>
+                                    <span class="odd-val">3.60</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end mt-1">
+                            <a href="#" class="text-info text-decoration-none" style="font-size: 0.72rem;">+85 mercados <i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Partido 2 -->
+            <div class="bp-match-row">
+                <div class="row align-items-center g-2">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-dark text-info">20:30</span>
+                            <div>
+                                <div class="fw-bold text-white fs-6">Real Madrid</div>
+                                <div class="fw-bold text-white fs-6">FC Barcelona</div>
+                                <div class="small text-muted" style="font-size: 0.72rem;">LaLiga España</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row g-1">
+                            <div class="col-4">
+                                <div class="odd-btn d-flex justify-content-between align-items-center">
+                                    <span class="odd-label">1</span>
+                                    <span class="odd-val">2.20</span>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="odd-btn d-flex justify-content-between align-items-center">
+                                    <span class="odd-label">X</span>
+                                    <span class="odd-val">3.40</span>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="odd-btn d-flex justify-content-between align-items-center">
+                                    <span class="odd-label">2</span>
+                                    <span class="odd-val">2.95</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end mt-1">
+                            <a href="#" class="text-info text-decoration-none" style="font-size: 0.72rem;">+112 mercados <i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Partido 3 -->
+            <div class="bp-match-row">
+                <div class="row align-items-center g-2">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-dark text-info">21:00</span>
+                            <div>
+                                <div class="fw-bold text-white fs-6">Liverpool</div>
+                                <div class="fw-bold text-white fs-6">Manchester City</div>
+                                <div class="small text-muted" style="font-size: 0.72rem;">Premier League</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row g-1">
+                            <div class="col-4">
+                                <div class="odd-btn d-flex justify-content-between align-items-center">
+                                    <span class="odd-label">1</span>
+                                    <span class="odd-val">2.40</span>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="odd-btn d-flex justify-content-between align-items-center">
+                                    <span class="odd-label">X</span>
+                                    <span class="odd-val">3.30</span>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="odd-btn d-flex justify-content-between align-items-center">
+                                    <span class="odd-label">2</span>
+                                    <span class="odd-val">2.70</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end mt-1">
+                            <a href="#" class="text-info text-decoration-none" style="font-size: 0.72rem;">+94 mercados <i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- COLUMNA 3: BOLETO DE APUESTAS / BET SLIP (25%) -->
+    <div class="col-lg-3">
+        <div class="betslip-card">
+            <div class="betslip-header">
+                <i class="bi bi-ticket-detailed-fill me-1"></i> Boleto de Apuesta
+            </div>
+            <div class="p-4 text-center text-muted">
+                <i class="bi bi-plus-circle fs-1 text-info opacity-50 d-block mb-2"></i>
+                <h6 class="text-white fw-bold mb-1 fs-6">Boleto Vacío</h6>
+                <p class="small mb-0" style="font-size: 0.78rem;">Selecciona alguna cuota de los partidos para armar tu combinación.</p>
+            </div>
+        </div>
+    </div>
+
 </div>
