@@ -17,7 +17,6 @@ public class AppDbContext : DbContext
     public DbSet<Bet> Bets => Set<Bet>();
 
 
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
 
     {
