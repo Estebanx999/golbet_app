@@ -3,7 +3,7 @@
 }
 
 <style>
-    /* Estilos específicos BetPlay 3 Columnas */
+    /* BetPlay 3-Column specific styles */
     .bp-sidebar-box {
         background-color: #152238;
         border: 1px solid #1f3454;
@@ -38,7 +38,7 @@
             color: #00e676;
         }
 
-        /* Estilo para deportes deshabilitados / Próximamente */
+        /* Style for disabled sports / Coming Soon */
         .bp-menu-item.disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -66,7 +66,7 @@
             background-color: #1a2c4a;
         }
 
-    /* Botones de Cuotas BetPlay */
+    /* BetPlay Odds Buttons */
     .odd-btn {
         background-color: #0b1321;
         border: 1px solid #1f3454;
@@ -115,10 +115,10 @@
 
 <div class="row g-3">
 
-    <!-- COLUMNA 1: MENÚ LATERAL DE NAVEGACIÓN Y LIGAS (20%) -->
+    <!-- COLUMN 1: SIDEBAR NAVIGATION AND LEAGUES (20%) -->
     <div class="col-lg-3 col-md-4">
 
-        <!-- Categorías Principales -->
+        <!-- Top Categories -->
         <div class="bp-sidebar-box mb-3">
             <div class="bp-sidebar-header">
                 <i class="bi bi-fire text-warning me-1"></i> Principales Ligas
@@ -147,19 +147,19 @@
             </div>
         </div>
 
-        <!-- Todos los Deportes -->
+        <!-- All Sports -->
         <div class="bp-sidebar-box">
             <div class="bp-sidebar-header">
                 <i class="bi bi-grid-fill me-1"></i> Deportes
             </div>
             <div class="d-flex flex-column">
-                <!-- Fútbol Activo -->
+                <!-- Active Soccer -->
                 <a href="#" class="bp-menu-item active">
                     <span><i class="bi bi-dribbble me-2 text-success"></i> Fútbol</span>
                     <span class="badge bg-success text-dark fw-bold">145</span>
                 </a>
 
-                <!-- Deportes Próximamente (Deshabilitados) -->
+                <!-- Coming Soon Sports (Disabled) -->
                 <div class="bp-menu-item disabled">
                     <span><i class="bi bi-basket me-2 text-secondary"></i> Baloncesto</span>
                     <span class="badge bg-secondary text-dark" style="font-size: 0.65rem;">Próximamente</span>
@@ -176,10 +176,10 @@
         </div>
     </div>
 
-    <!-- COLUMNA 2: PARRILLA DE PARTIDOS Y DESTACADOS (55%) -->
+    <!-- COLUMN 2: MATCH GRID AND FEATURED MATCHES (55%) -->
     <div class="col-lg-6 col-md-8">
 
-        <!-- Banner Promocional Estilo BetPlay (Compacto) -->
+        <!-- BetPlay Style Promotional Banner (Compact) -->
         <div class="p-3 mb-3 rounded d-flex align-items-center justify-content-between" style="background: linear-gradient(90deg, #102d53 0%, #0e1b30 100%); border-left: 4px solid #00e676;">
             <div>
                 <span class="badge bg-danger text-uppercase mb-1">Supercuota de Hoy</span>
@@ -187,19 +187,20 @@
                 <small class="text-muted">Gana Nacional + Más de 2.5 goles en el partido</small>
             </div>
             <div class="text-end">
-                <span class="d-block text-muted small">Cuota Especial</span>
-                <span class="fw-bold fs-5 text-success">4.50</span>
+                <a class="btn btn-success btn-lg" asp-controller="Matches" asp-action="Index">
+                    Ver partidos
+                </a>
             </div>
         </div>
 
-        <!-- Tabla de Partidos Destacados -->
+        <!-- Featured Matches Table -->
         <div class="mb-3">
             <div class="bp-section-title text-white d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-trophy-fill text-warning me-1"></i> Fútbol - Destacados del Día</span>
                 <span class="small text-muted">1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2</span>
             </div>
 
-            <!-- Partido 1 -->
+            <!-- Match 1 -->
             <div class="bp-match-row">
                 <div class="row align-items-center g-2">
                     <div class="col-6">
@@ -240,7 +241,7 @@
                 </div>
             </div>
 
-            <!-- Partido 2 -->
+            <!-- Match 2 -->
             <div class="bp-match-row">
                 <div class="row align-items-center g-2">
                     <div class="col-6">
@@ -281,7 +282,7 @@
                 </div>
             </div>
 
-            <!-- Partido 3 -->
+            <!-- Match 3 -->
             <div class="bp-match-row">
                 <div class="row align-items-center g-2">
                     <div class="col-6">
@@ -325,7 +326,7 @@
         </div>
     </div>
 
-    <!-- COLUMNA 3: BOLETO DE APUESTAS / BET SLIP (25%) -->
+    <!-- COLUMN 3: BETTING SLIP / BET SLIP (25%) -->
     <div class="col-lg-3">
         <div class="betslip-card">
             <div class="betslip-header">

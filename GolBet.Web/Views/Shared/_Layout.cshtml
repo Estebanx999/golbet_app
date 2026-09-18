@@ -18,12 +18,12 @@
 
     <style>
             :root {
-                --bp-bg: #0b1019; /* Fondo ultra oscuro */
-                --bp-header: #0e1b30; /* Azul azulado navbar */
-                --bp-card: #152238; /* Azul marino profundo contenedores */
-                --bp-card-header: #1c2d4a; /* Azul medio para barras de títulos */
-                --bp-accent-lime: #00e676; /* Verde neón brillante para cuotas/botones */
-                --bp-accent-blue: #0088ff; /* Azul brillante detalles */
+                --bp-bg: #0b1019; /* Ultra dark background */
+                --bp-header: #0e1b30; /* Bluish navbar background */
+                --bp-card: #152238; /* Deep navy container background */
+                --bp-card-header: #1c2d4a; /* Medium blue for title bars */
+                --bp-accent-lime: #00e676; /* Bright neon green for odds/buttons */
+                --bp-accent-blue: #0088ff; /* Bright blue accent details */
                 --bp-text: #ffffff;
                 --bp-text-muted: #8ca0ba;
                 --bp-border: #1f3454;
@@ -39,7 +39,7 @@
                 font-size: 0.9rem;
             }
 
-            /* Navbar*/
+            /* Navbar */
             .bp-navbar {
                 background-color: var(--bp-header);
                 border-bottom: 3px solid var(--bp-accent-lime);
@@ -66,7 +66,7 @@
                     background-color: rgba(255, 255, 255, 0.08);
                 }
 
-            /* Botones */
+            /* Buttons */
             .btn-bp-lime {
                 background-color: var(--bp-accent-lime);
                 color: #000;
@@ -130,6 +130,9 @@
                             <a class="nav-link bp-nav-link" asp-controller="Partidos" asp-action="Index">
                                 <i class="bi bi-trophy-fill text-warning me-1"></i> Deportes
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Matches" asp-action="Index">Partidos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link bp-nav-link" href="#">
