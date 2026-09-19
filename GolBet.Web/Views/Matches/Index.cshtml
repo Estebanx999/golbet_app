@@ -1,98 +1,115 @@
-﻿@* GolBet.Web/Views/Matches/Index.cshtml *@ 
+﻿@* GolBet.Web/Views/Matches/Index.cshtml *@
 @using GolBet.Entities.Enums
 @using GolBet.Web.Helpers
 @model IEnumerable<GolBet.Services.DTOs.MatchDto>
 
 @{
     ViewData["Title"] = "Partidos";
+    var current = (MatchStatus?)ViewBag.CurrentStatus;
 }
 
-<h2 class="mb-4">⚽ Cartelera de partidos</h2>
-  
+<h2 class="mb-4 text-white fw-bold">⚽ Cartelera de partidos</h2>
+
+<div class="d-flex gap-2 flex-wrap mb-4">
+    <a asp-action="Index"
+       class="btn btn-sm @(current is null ? "btn-success" : "btn-outline-success")">
+        Todos
+    </a>
+    <a asp-action="Index" asp-route-status="@MatchStatus.Scheduled"
+       class="btn btn-sm @(current == MatchStatus.Scheduled ? "btn-success" : "btn-outline-success")">
+        Programados
+    </a>
+    <a asp-action="Index" asp-route-status="@MatchStatus.InProgress"
+       class="btn btn-sm @(current == MatchStatus.InProgress ? "btn-success" : "btn-outline-success")">
+        En juego
+    </a>
+    <a asp-action="Index" asp-route-status="@MatchStatus.Finished"
+       class="btn btn-sm @(current == MatchStatus.Finished ? "btn-success" : "btn-outline-success")">
+        Finalizados
+    </a>
+</div>
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
     @foreach (var match in Model)
-
     {
         <div class="col">
-            <div class="card h-100 shadow-sm">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <small class="text-muted">
+            <div class="card h-100 shadow text-white" style="background-color: #111d2e; border: 1px solid #1f3454;">
+                <!-- Encabezado de la tarjeta -->
+                <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #17273e; border-bottom: 1px solid #1f3454;">
+                    <small class="text-light opacity-75">
                         📅 @match.Date.ToColombiaTime().ToString("ddd dd MMM · h:mm tt")
                     </small>
                     @switch (match.Status)
-
                     {
                         case MatchStatus.Scheduled:
-                            <span class="badge bg-primary">Programado</span>
+                            <span class="badge bg-primary px-2 py-1">Programado</span>
                             break;
                         case MatchStatus.InProgress:
-                            <span class="badge bg-warning text-dark">En juego</span>
+                            <span class="badge bg-warning text-dark fw-bold px-2 py-1">En juego</span>
                             break;
                         case MatchStatus.Finished:
-                            <span class="badge bg-secondary">Finalizado</span>
+                            <span class="badge bg-secondary px-2 py-1">Finalizado</span>
                             break;
                     }
-
                 </div>
-  
-                <div class="card-body">
+
+                <!-- Cuerpo de la tarjeta (Equipos) -->
+                <div class="card-body py-4">
                     <div class="d-flex justify-content-between align-items-center text-center">
                         <div class="w-100">
-                            <img src="@(match.HomeTeamCrestUrl ?? "https://placehold.co/60x60/e9ecef/6c757d?text=FC")"
-                                 alt="@match.HomeTeamName" width="60" height="60" class="mb-1" />
-                            <div class="fw-bold small">@match.HomeTeamName</div>
+                            <img src="@(match.HomeTeamCrestUrl ?? "https://placehold.co/60x60/1a2c47/ffffff?text=FC")"
+                                 alt="@match.HomeTeamName" width="60" height="60" class="mb-2 rounded shadow-sm" />
+                            <div class="fw-bold small text-white">@match.HomeTeamName</div>
                         </div>
 
-
-                        <div class="px-3 text-nowrap">
+                        <div class="px-2 text-nowrap">
                             @if (match.Status == MatchStatus.Finished)
-
                             {
-                                <span class="fs-3 fw-bold">@match.HomeGoals - @match.AwayGoals</span>
+                                <span class="fs-3 fw-bold text-success">@match.HomeGoals - @match.AwayGoals</span>
                             }
                             else
                             {
-                                <span class="fs-4 text-muted">vs</span>
+                                <span class="fs-5 text-light opacity-50 fw-bold">VS</span>
                             }
-
                         </div>
 
-  
-
                         <div class="w-100">
-                            <img src="@(match.AwayTeamCrestUrl ?? "https://placehold.co/60x60?text=⚽")"
-                                 alt="@match.AwayTeamName" width="60" height="60" class="mb-1" />
-                            <div class="fw-bold small">@match.AwayTeamName</div>
+                            <img src="@(match.AwayTeamCrestUrl ?? "https://placehold.co/60x60/1a2c47/ffffff?text=⚽")"
+                                 alt="@match.AwayTeamName" width="60" height="60" class="mb-2 rounded shadow-sm" />
+                            <div class="fw-bold small text-white">@match.AwayTeamName</div>
                         </div>
                     </div>
                 </div>
 
-  
-
-                <div class="card-footer">
+                <!-- Pie de la tarjeta (Cuotas) -->
+                <div class="card-footer" style="background-color: #0b1320; border-top: 1px solid #1f3454;">
                     <div class="row g-2 text-center">
                         <div class="col">
-                            <div class="border rounded py-1">
-                                <small class="text-muted d-block">1 · Local</small>
-                                <span class="fw-bold">@match.HomeOdds.ToString("0.00")</span>
+                            <div class="rounded py-1" style="background-color: #17273e; border: 1px solid #233b5d;">
+                                <small class="text-light opacity-75 d-block" style="font-size: 0.72rem;">1 · Local</small>
+                                <span class="fw-bold text-success fs-6">@match.HomeOdds.ToString("0.00")</span>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="border rounded py-1">
-                                <small class="text-muted d-block">X · Empate</small>
-                                <span class="fw-bold">@match.DrawOdds.ToString("0.00")</span>
+                            <div class="rounded py-1" style="background-color: #17273e; border: 1px solid #233b5d;">
+                                <small class="text-light opacity-75 d-block" style="font-size: 0.72rem;">X · Empate</small>
+                                <span class="fw-bold text-success fs-6">@match.DrawOdds.ToString("0.00")</span>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="border rounded py-1">
-                                <small class="text-muted d-block">2 · Visitante</small>
-                                <span class="fw-bold">@match.AwayOdds.ToString("0.00")</span>
+                            <div class="rounded py-1" style="background-color: #17273e; border: 1px solid #233b5d;">
+                                <small class="text-light opacity-75 d-block" style="font-size: 0.72rem;">2 · Visitante</small>
+                                <span class="fw-bold text-success fs-6">@match.AwayOdds.ToString("0.00")</span>
                             </div>
                         </div>
                     </div>
+
+                    <a asp-action="Detail" asp-route-id="@match.Id"
+                       class="btn btn-sm btn-outline-light w-100 mt-2 opacity-75">
+                        Ver detalle
+                    </a>
                 </div>
             </div>
         </div>
     }
-</div> 
+</div>
