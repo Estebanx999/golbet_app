@@ -18,12 +18,12 @@
 
     <style>
             :root {
-                --bp-bg: #0b1019; /* Ultra dark background */
-                --bp-header: #0e1b30; /* Bluish navbar background */
-                --bp-card: #152238; /* Deep navy container background */
-                --bp-card-header: #1c2d4a; /* Medium blue for title bars */
-                --bp-accent-lime: #00e676; /* Bright neon green for odds/buttons */
-                --bp-accent-blue: #0088ff; /* Bright blue accent details */
+                --bp-bg: #0b1019;
+                --bp-header: #0e1b30;
+                --bp-card: #152238;
+                --bp-card-header: #1c2d4a;
+                --bp-accent-lime: #00e676;
+                --bp-accent-blue: #0088ff;
                 --bp-text: #ffffff;
                 --bp-text-muted: #8ca0ba;
                 --bp-border: #1f3454;
@@ -53,17 +53,25 @@
             }
 
             .bp-nav-link {
-                color: #d1e0f0 !important;
+                color: #8ca0ba !important;
                 font-weight: 700;
                 text-transform: uppercase;
                 font-size: 0.85rem;
-                padding: 0.6rem 1rem !important;
+                padding: 0.5rem 0.8rem !important;
                 border-radius: 4px;
+                transition: all 0.2s ease-in-out;
             }
 
-                .bp-nav-link:hover, .bp-nav-link.active {
+                .bp-nav-link:hover {
                     color: #fff !important;
-                    background-color: rgba(255, 255, 255, 0.08);
+                    background-color: rgba(255, 255, 255, 0.05);
+                }
+
+                /* Indicador de pestaña activa real */
+                .bp-nav-link.active {
+                    color: #fff !important;
+                    background-color: rgba(255, 255, 255, 0.12) !important;
+                    border-bottom: 2px solid var(--bp-accent-lime);
                 }
 
             /* Buttons */
@@ -76,25 +84,32 @@
                 border: none;
                 padding: 0.5rem 1.2rem;
                 border-radius: 4px;
+                box-shadow: 0 0 10px rgba(0, 230, 118, 0.2);
+                transition: all 0.2s;
             }
 
                 .btn-bp-lime:hover {
                     background-color: #00c853;
                     color: #000;
-                    box-shadow: 0 0 12px rgba(0, 230, 118, 0.4);
+                    box-shadow: 0 0 15px rgba(0, 230, 118, 0.5);
                 }
 
             .btn-bp-login {
-                color: #fff;
+                color: #d1e0f0;
                 font-weight: 700;
                 font-size: 0.85rem;
                 border: 1px solid var(--bp-border);
-                background: rgba(255,255,255,0.05);
+                background: transparent;
+                text-transform: uppercase;
+                padding: 0.45rem 1rem;
+                border-radius: 4px;
+                transition: all 0.2s;
             }
 
                 .btn-bp-login:hover {
-                    background: rgba(255,255,255,0.15);
+                    background: rgba(255, 255, 255, 0.08);
                     color: #fff;
+                    border-color: #3a5885;
                 }
 
             /* Footer */
@@ -106,6 +121,11 @@
     </style>
 </head>
 <body>
+
+    @{
+        var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+        var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    }
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bp-navbar py-1">
@@ -120,30 +140,41 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarMain">
-                    <ul class="navbar-nav me-auto ms-3 gap-1">
+                    <ul class="navbar-nav me-auto ms-3 gap-2 align-items-center">
+                        <!-- INICIO -->
                         <li class="nav-item">
-                            <a class="nav-link bp-nav-link active" asp-controller="Home" asp-action="Index">
+                            <a class="nav-link bp-nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">
                                 <i class="bi bi-house-door-fill text-warning me-1"></i> Inicio
                             </a>
                         </li>
+
+                        <!-- DEPORTES (Próximamente) -->
                         <li class="nav-item">
-                            <a class="nav-link bp-nav-link" asp-controller="Partidos" asp-action="Index">
-                                <i class="bi bi-trophy-fill text-warning me-1"></i> Deportes
+                            <a class="nav-link bp-nav-link d-flex flex-column align-items-center py-1 opacity-75" href="#" data-bs-toggle="modal" data-bs-target="#modalProximamente">
+                                <span><i class="bi bi-trophy-fill text-warning me-1"></i> Deportes</span>
+                                <span class="badge bg-secondary opacity-75" style="font-size: 0.55rem; padding: 2px 5px; line-height: 1;">PRÓXIMAMENTE</span>
                             </a>
                         </li>
+
+                        <!-- PARTIDOS -->
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Matches" asp-action="Index">Partidos</a>
+                            <a class="nav-link bp-nav-link @(currentController == "Matches" ? "active" : "")" asp-controller="Matches" asp-action="Index">
+                                <i class="bi bi-dribbble text-warning me-1"></i> Partidos
+                            </a>
                         </li>
+
+                        <!-- APUESTAS EN VIVO (Próximamente) -->
                         <li class="nav-item">
-                            <a class="nav-link bp-nav-link" href="#">
-                                <span class="badge bg-danger me-1">EN VIVO</span> Apuestas en Vivo
+                            <a class="nav-link bp-nav-link d-flex flex-column align-items-center py-1 opacity-75" href="#" data-bs-toggle="modal" data-bs-target="#modalProximamente">
+                                <span><span class="badge bg-danger me-1">EN VIVO</span> Apuestas en Vivo</span>
+                                <span class="badge bg-secondary opacity-75" style="font-size: 0.55rem; padding: 2px 5px; line-height: 1;">PRÓXIMAMENTE</span>
                             </a>
                         </li>
                     </ul>
 
-                    <div class="d-flex align-items-center gap-2">
-                        <a class="btn btn-sm btn-bp-login px-3" asp-controller="Account" asp-action="Login">Ingresar</a>
-                        <a class="btn btn-sm btn-bp-lime" asp-controller="Account" asp-action="Register">Registrarse</a>
+                    <div class="d-flex align-items-center gap-2 ms-auto">
+                        <a class="btn btn-sm btn-bp-login" asp-controller="Account" asp-action="Login">Ingresar</a>
+                        <a class="btn btn-sm btn-bp-lime" asp-controller="Account" asp-action="Register">REGISTRARSE</a>
                     </div>
                 </div>
             </div>
@@ -154,6 +185,26 @@
         <main role="main">
             @RenderBody()
         </main>
+    </div>
+
+    <!-- Modal Informativo Próximamente -->
+    <div class="modal fade" id="modalProximamente" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-white" style="background-color: var(--bp-card); border: 1px solid var(--bp-border);">
+                <div class="modal-header" style="border-bottom: 1px solid var(--bp-border);">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-clock-history text-warning me-2"></i>Módulo en Desarrollo</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <i class="bi bi-rocket-takeoff text-success fs-1 d-block mb-3"></i>
+                    <h4 class="fw-bold">¡Próximamente disponible!</h4>
+                    <p class="text-muted small mb-0">Estamos trabajando para traerte más deportes y apuestas en tiempo real. Por ahora, disfruta de nuestra cartelera de partidos de fútbol.</p>
+                </div>
+                <div class="modal-footer" style="border-top: 1px solid var(--bp-border);">
+                    <button type="button" class="btn btn-sm btn-bp-lime w-100" data-bs-dismiss="modal">ENTENDIDO</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer class="py-3 text-center">
