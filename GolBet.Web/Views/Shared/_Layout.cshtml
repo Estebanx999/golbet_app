@@ -141,6 +141,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarMain">
                     <ul class="navbar-nav me-auto ms-3 gap-2 align-items-center">
+
                         <!-- INICIO -->
                         <li class="nav-item">
                             <a class="nav-link bp-nav-link @(currentController == "Home" && currentAction == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">
@@ -160,6 +161,13 @@
                         <li class="nav-item">
                             <a class="nav-link bp-nav-link @(currentController == "Matches" ? "active" : "")" asp-controller="Matches" asp-action="Index">
                                 <i class="bi bi-dribbble text-warning me-1"></i> Partidos
+                            </a>
+                        </li>
+
+                        <!-- EQUIPOS -->
+                        <li class="nav-item">
+                            <a class="nav-link bp-nav-link @(currentController == "Teams" ? "active" : "")" asp-controller="Teams" asp-action="Index">
+                                <i class="bi bi-shield-fill text-warning me-1"></i> Equipos
                             </a>
                         </li>
 
@@ -183,6 +191,15 @@
 
     <div class="container-fluid px-4 my-3">
         <main role="main">
+
+            @if (TempData["Success"] is string message) 
+            { 
+                 <div class="alert alert-success alert-dismissible fade show"> 
+                     ✅ @message 
+                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button> 
+                  </div> 
+            }
+
             @RenderBody()
         </main>
     </div>
