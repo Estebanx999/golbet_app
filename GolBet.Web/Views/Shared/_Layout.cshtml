@@ -164,12 +164,15 @@
                             </a>
                         </li>
 
-                        <!-- EQUIPOS -->
-                        <li class="nav-item">
-                            <a class="nav-link bp-nav-link @(currentController == "Teams" ? "active" : "")" asp-controller="Teams" asp-action="Index">
-                                <i class="bi bi-shield-fill text-warning me-1"></i> Equipos
-                            </a>
-                        </li>
+                        <!-- EQUIPOS (Solo Administradores) -->
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link bp-nav-link @(currentController == "Teams" ? "active" : "")" asp-controller="Teams" asp-action="Index">
+                                    <i class="bi bi-shield-fill text-warning me-1"></i> Equipos
+                                </a>
+                            </li>
+                        }
 
                         <!-- APUESTAS EN VIVO (Próximamente) -->
                         <li class="nav-item">
@@ -180,9 +183,43 @@
                         </li>
                     </ul>
 
-                    <div class="d-flex align-items-center gap-2 ms-auto">
-                        <a class="btn btn-sm btn-bp-login" asp-controller="Account" asp-action="Login">Ingresar</a>
-                        <a class="btn btn-sm btn-bp-lime" asp-controller="Account" asp-action="Register">REGISTRARSE</a>
+                    <!-- SECCIÓN DE AUTENTICACIÓN DINÁMICA -->
+                    <div class="d-flex align-items-center gap-3 ms-auto">
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-white d-flex align-items-center gap-1 small">
+                                    <i class="bi bi-person-fill text-purple fs-5" style="color: #b19cd9;"></i>
+                                    <span class="fw-bold">
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            @:Administrador GolBet
+                                        }
+                                        else
+                                        {
+                                            @:Apostador GolBet
+                                        }
+                                    </span>
+                                </span>
+
+                                <!-- Badge de FutCoins (visible para apostadores o usuarios generales) -->
+                                @if (!User.IsInRole("Admin"))
+                                {
+                                    <span class="badge text-dark fw-bold px-2 py-1" style="background-color: #ffc107; font-size: 0.8rem;">
+                                        <i class="bi bi-coin"></i> 100.000 FutCoins
+                                    </span>
+                                }
+                            </div>
+
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-bp-login">Cerrar sesión</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="btn btn-sm btn-bp-login" asp-controller="Account" asp-action="Login">Ingresar</a>
+                            <a class="btn btn-sm btn-bp-lime" asp-controller="Account" asp-action="Register">REGISTRARSE</a>
+                        }
                     </div>
                 </div>
             </div>
@@ -192,12 +229,12 @@
     <div class="container-fluid px-4 my-3">
         <main role="main">
 
-            @if (TempData["Success"] is string message) 
-            { 
-                 <div class="alert alert-success alert-dismissible fade show"> 
-                     ✅ @message 
-                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button> 
-                  </div> 
+            @if (TempData["Success"] is string message)
+            {
+                <div class="alert alert-success alert-dismissible fade show">
+                    ✅ @message
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
             }
 
             @RenderBody()
