@@ -14,7 +14,7 @@ public class MatchRepository : GenericRepository<Match>, IMatchRepository
     public MatchRepository(AppDbContext context) : base(context) { }
 
 
-    public async Task<IEnumerable<Match>> GetAllWithTeamsAsync(MatchStatus? status = null)
+    public async Task<IEnumerable<Match>> GetAllWithTeamsAsync(MatchStatus? status = null, string? search = null)
 
     {
         var query = _dbSet
@@ -27,6 +27,12 @@ public class MatchRepository : GenericRepository<Match>, IMatchRepository
 
         if (status.HasValue)
             query = query.Where(m => m.Status == status.Value);
+
+        // Search by team name (home OR away). Translated to SQL LIKE, so it runs in the database.
+        // Case-insensitive thanks to the CI_AI collation on Team.Name (Module 2).
+        if (!string.IsNullOrWhiteSpace(search))
+            query = query.Where(m => m.HomeTeam.Name.Contains(search)
+                                  || m.AwayTeam.Name.Contains(search));
 
         return await query.OrderBy(m => m.Date).ToListAsync();
     }
