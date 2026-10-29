@@ -52,6 +52,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Business services (Se agregó ITeamService)
 builder.Services.AddScoped<IMatchService, MatchService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<IBetService, BetService>();
 
 var app = builder.Build();
 
