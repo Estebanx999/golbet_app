@@ -80,26 +80,81 @@
                 </div>
             </div>
         </div>
+
+        @if (Model.Status == MatchStatus.Scheduled)
+        {
+            @if (User.IsInRole("Apostador"))
+            {
+                <hr />
+                <h5 class="text-center mb-3">🎯 Haz tu apuesta</h5>
+                <form asp-controller="Bets" asp-action="Place" method="post"
+                      class="col-md-8 mx-auto">
+                    <input type="hidden" name="MatchId" value="@Model.Id" />
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Monto</span>
+                        <input name="Amount" type="number" step="1" min="1" value="1000"
+                               class="form-control" />
+                        <span class="input-group-text">FutCoins</span>
+                    </div>
+                    <div class="row g-2 text-center">
+                        <div class="col">
+                            <button type="submit" name="Pick" value="Home"
+                                    class="btn btn-outline-success w-100">
+                                1 · @Model.HomeOdds.ToString("0.00")
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" name="Pick" value="Draw"
+                                    class="btn btn-outline-success w-100">
+                                X · @Model.DrawOdds.ToString("0.00")
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button type="submit" name="Pick" value="Away"
+                                    class="btn btn-outline-success w-100">
+                                2 · @Model.AwayOdds.ToString("0.00")
+                            </button>
+                        </div>
+                    </div>
+                    <small class="text-muted d-block text-center mt-2">
+                        Elige tu monto y haz clic en la cuota para apostar
+                    </small>
+                </form>
+            }
+            else if (!User.Identity!.IsAuthenticated)
+            {
+                <div class="text-center mt-3">
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-success">
+                        Inicia sesión para apostar
+                    </a>
+                </div>
+            }
+        }
     </div>
 
-    <div class="card-footer d-flex justify-content-between align-items-center"> 
-        <small class="text-muted">🎟️ @Model.TotalBets apuestas realizadas</small> 
-        <div> 
+    <div class="card-footer d-flex justify-content-between align-items-center">
+        <small class="text-muted">🎟️ @Model.TotalBets apuestas realizadas</small>
 
-            @if (User.IsInRole("Admin")) 
-            { 
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Editar</a> 
-            } 
-            
+        @if (User.IsInRole("Admin"))
+        {
+            <div>
+                @if (Model.Status == MatchStatus.Scheduled)
+                {
+                    <a asp-action="Edit" asp-route-id="@Model.Id"
+                       class="btn btn-outline-primary">Editar</a>
 
-            @if (Model.Status == MatchStatus.Scheduled) 
-            { 
-                <button class="btn btn-success" disabled 
-                        title="Disponible cuando implementemos las apuestas"> 
-                    Apostar (Módulo 8) 
-                </button> 
-            } 
-
-        </div> 
-    </div> 
+                    <form asp-action="Start" asp-route-id="@Model.Id" method="post"
+                          class="d-inline"
+                          onsubmit="return confirm('¿Iniciar el partido? Las apuestas quedarán cerradas.');">
+                        <button type="submit" class="btn btn-warning">Iniciar partido</button>
+                    </form>
+                }
+                else if (Model.Status == MatchStatus.InProgress)
+                {
+                    <a asp-action="Close" asp-route-id="@Model.Id"
+                       class="btn btn-danger">Cerrar partido</a>
+                }
+            </div>
+        }
+    </div>
 </div>

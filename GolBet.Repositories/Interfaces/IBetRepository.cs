@@ -11,4 +11,8 @@ public interface IBetRepository : IGenericRepository<Bet>
 
     /// <summary>All bets of a user, newest first, with match and teams loaded.</summary> 
     Task<IEnumerable<Bet>> GetByUserAsync(string userId);
+
+
+    /// <summary>Pending bets of a match, TRACKED and with their users loaded.</summary> 
+    Task<List<Bet>> GetPendingByMatchAsync(int matchId);
 }
