@@ -480,3 +480,5 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+# Serilog files (Module 10): logs belong to the environment, not the repo
+Logs/

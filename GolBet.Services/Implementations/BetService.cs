@@ -12,6 +12,7 @@ using GolBet.Repositories.Interfaces;
 using GolBet.Services.DTOs; 
 using GolBet.Services.Interfaces; 
 using Microsoft.AspNetCore.Identity; 
+using Microsoft.Extensions.Logging;   // Module 10 
   
 namespace GolBet.Services.Implementations;
 
@@ -22,6 +23,7 @@ public class BetService : IBetService
     private readonly IMatchRepository _matchRepository;
     private readonly UserManager<AppUser> _userManager;
     private readonly IMapper _mapper;
+    private readonly ILogger<BetService> _logger;   // Module 10 
 
 
     public BetService(
@@ -29,13 +31,15 @@ public class BetService : IBetService
         IBetRepository betRepository,
         IMatchRepository matchRepository,
         UserManager<AppUser> userManager,
-        IMapper mapper)
+        IMapper mapper,
+        ILogger<BetService> logger)                  // Module 10 
     {
 
         _betRepository = betRepository;
         _matchRepository = matchRepository;
         _userManager = userManager;
         _mapper = mapper;
+        _logger = logger;
     }
 
 
@@ -95,6 +99,12 @@ public class BetService : IBetService
 
 
         await _betRepository.AddAsync(bet);   // SaveChangesAsync happens here 
+
+        // Audit log AFTER the successful save: structured template, NO $ interpolation 
+        _logger.LogInformation(
+            "Bet placed: user {UserId} bet {Amount} on {Pick} " +
+            "for match {MatchId} at odds {Odds}",
+            userId, dto.Amount, dto.Pick, dto.MatchId, oddsAtPlacement);
     }
 
 
